@@ -28,12 +28,13 @@ Cada pasta de cláusula contém:
 
 | Cláusula | Overview | Aprendizados | Modelos |
 |----------|----------|-------------|---------|
-| 4 — Contexto | ✅ Criado | 0 | 0 |
-| 5 — Liderança | ✅ Criado | 0 | 0 |
-| 6 — Planejamento | ✅ Criado | 0 | 0 |
+| 4 — Contexto | ✅ Criado | 1 (contexto judicial) | 0 |
+| 5 — Liderança | ✅ Criado | 1 (liderança do magistrado) | 0 |
+| 6 — Planejamento | ✅ Criado | 1 (objetivos + metas CNJ) | 0 |
 | 7 — Apoio | ✅ Criado | 0 | 0 |
 | 8 — Operação | ✅ Criado | 0 | 0 |
-| 9 — Avaliação | ✅ Criado | 0 | 0 |
-| 10 — Melhoria | ✅ Criado | 0 | 0 |
+| 9 — Avaliação | ✅ Criado | 1 (monitoramento judicial) | 0 |
+| 10 — Melhoria | ✅ Criado | 1 (NC no judiciário) | 0 |
+| **Transversal** | — | glossario_judiciario.md | — |
 
 *Tabela atualizada a cada nova consolidação de aprendizado.*
