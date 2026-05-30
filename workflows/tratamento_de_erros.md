@@ -53,17 +53,8 @@ Todo erro — técnico ou de processo — é uma **não-conformidade interna** d
 
 ## Registro
 
-Todo erro passa por registro no `/context/error_log.md`:
-
-```markdown
-### [DATA] — Título curto do erro
-
-**Descrição:** [Sintoma]
-**Causa-raiz:** [Resultado dos 5 Porquês]
-**Ação corretiva:** [O que foi feito]
-**Verificação:** [Como confirmamos a resolução]
-**Status:** Aberto | Resolvido | Monitorando
-```
+Todo erro passa por registro no `/context/error_log.md`, usando o formato de
+registro definido naquele arquivo.
 
 O registro é proposto ao usuário antes de ser commitado — segue a **Regra 4 (Aprovação Manual)**.
 

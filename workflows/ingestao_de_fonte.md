@@ -10,13 +10,8 @@ O usuário fornece um material bruto para ser adicionado ao sistema.
 
 ## Tipos de Fonte Aceitos
 
-| Tipo | Onde salvar | Nomenclatura |
-|------|------------|--------------|
-| Transcrição de reunião com professor | `/references/reunioes/` | `AAAA-MM-DD_reuniao_tema.md` |
-| Documento normativo (ISO, ABNT) | `/references/normas/` | `AAAA-MM-DD_norma_titulo.md` |
-| Material do professor (slides, apostilas) | `/references/material_professor/` | `AAAA-MM-DD_material_titulo.md` |
-| Reflexão pessoal do usuário | `/references/reflexoes/` | `AAAA-MM-DD_reflexao_tema.md` |
-| Artigo ou referência externa | `/references/literatura/` | `AAAA-MM-DD_artigo_titulo.md` |
+Os tipos de fonte, suas pastas de destino e a nomenclatura estão definidos em
+`/context/convencoes.md` (seção "Estrutura de Pastas" → `/references/`).
 
 ---
 
@@ -43,21 +38,8 @@ Apresentar ao usuário:
 
 ### 4. Criar o Arquivo
 
-Após aprovação, criar o arquivo em `/references/` com o seguinte cabeçalho:
-
-```markdown
-# [Título Descritivo]
-
-**Tipo:** reuniao | reflexao | norma | material | artigo  
-**Data:** AAAA-MM-DD  
-**Fonte original:** [descrição — sem dados sigilosos]  
-**Anonimizado:** Sim | Não aplicável  
-**Processado para knowledge_base:** Não
-
----
-
-[Conteúdo da fonte]
-```
+Após aprovação, criar o arquivo em `/references/` usando o **Template A —
+Cabeçalho de arquivo de referência** definido em `/context/convencoes.md`.
 
 ### 5. Confirmar e Prosseguir
 

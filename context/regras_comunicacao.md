@@ -21,49 +21,6 @@ Para tarefas complexas, o agente organiza a resposta em:
 
 Para respostas curtas (perguntas factuais, definições), resposta direta sem estrutura formal.
 
-## Nomenclatura de Arquivos
-
-Padrão obrigatório: `AAAA-MM-DD_tipo_tema.md`
-
-| Campo | Valores possíveis |
-|-------|-------------------|
-| `AAAA-MM-DD` | Data de criação no formato ISO 8601 |
-| `tipo` | `reuniao`, `reflexao`, `norma`, `modelo`, `aprendizado`, `errata` |
-| `tema` | Descrição curta em kebab-case (sem acentos) |
-
-**Exemplos:**
-- `2026-05-30_reuniao_gestao-de-riscos.md`
-- `2026-06-15_reflexao_analise-critica-lideranca.md`
-- `2026-07-01_modelo_politica-da-qualidade.md`
-
-## Organização da Knowledge Base
-
-Documentos da `/knowledge_base` seguem a numeração das cláusulas ISO 9001:
-
-| Pasta/Arquivo | Cláusula |
-|---------------|----------|
-| `clausula_4_contexto_organizacional/` | 4 — Contexto da organização |
-| `clausula_5_lideranca/` | 5 — Liderança |
-| `clausula_6_planejamento/` | 6 — Planejamento |
-| `clausula_7_suporte/` | 7 — Apoio |
-| `clausula_8_operacao/` | 8 — Operação |
-| `clausula_9_avaliacao_desempenho/` | 9 — Avaliação de desempenho |
-| `clausula_10_melhoria/` | 10 — Melhoria |
-
-## Versionamento de Documentos
-
-Cada documento da knowledge_base possui um rodapé de metadados:
-
-```markdown
 ---
-Versão: v0.1
-Data: AAAA-MM-DD
-Fonte: [tipo de fonte — data]
-Cláusula ISO: X.Y
-Aprovado por: [usuário — data]
-```
 
-Progressão de versões:
-- `v0.x` — rascunho, ainda não aprovado pelo usuário.
-- `v1.0` — primeira versão aprovada e consolidada.
-- `vX.Y` — revisões posteriores aprovadas.
+> **Nomenclatura de arquivos, estrutura de pastas, templates de metadados e versionamento:** ver `/context/convencoes.md` (fonte única de verdade).

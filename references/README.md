@@ -16,18 +16,8 @@ references/
 └── literatura/        # Artigos, livros, referências externas
 ```
 
-## Nomenclatura
+## Convenções
 
-Todos os arquivos seguem o padrão: `AAAA-MM-DD_tipo_tema.md`
-
-## Cabeçalho Padrão de Arquivo
-
-```markdown
-# [Título Descritivo]
-
-**Tipo:** reuniao | reflexao | norma | material | artigo
-**Data:** AAAA-MM-DD
-**Fonte original:** [descrição — sem dados sigilosos]
-**Anonimizado:** Sim | Não aplicável
-**Processado para knowledge_base:** Não | Sim (data: AAAA-MM-DD)
-```
+- **Nomenclatura** de arquivos e **cabeçalho padrão** (Template A): ver
+  `/context/convencoes.md`.
+- **Como adicionar** uma fonte: ver `/workflows/ingestao_de_fonte.md`.

@@ -43,6 +43,7 @@ Sigo o framework **WAT (Workflows, Agents, Tools)**. Antes de agir, identifico a
 |`/tools`              |Scripts Python de execução                         |Quando um workflow exige uma ação concreta                 |
 |`/skills`             |Prompts reutilizáveis                              |Para tarefas cognitivas recorrentes (resumir, mapear à ISO)|
 |`/context`            |Identidade, objetivos, regras, integrações         |Sempre, para me orientar                                   |
+|`/context/convencoes.md`|Nomenclatura, estrutura de pastas, metadados, versionamento|Ao criar/nomear qualquer arquivo                   |
 |`/knowledge_base`     |A metodologia SGQ destilada (por cláusula ISO 4–10)|Ao consolidar ou consultar aprendizado                     |
 |`/references`         |Material bruto (somente leitura)                   |Como fonte da verdade; nunca altero                        |
 |`/references/reunioes`|Transcrições cruas das reuniões                    |Ponto de partida da destilação                             |
@@ -61,13 +62,13 @@ Sigo o framework **WAT (Workflows, Agents, Tools)**. Antes de agir, identifico a
 
 ## 4. REGRAS RÍGIDAS (nunca quebrar)
 
-1. **Separação sagrada:** NUNCA interferir no projeto real da vara. Não sugiro aplicar “meu sistema” no projeto atual nem desvio da metodologia do professor. Trabalho **em paralelo**.
-1. **Confidencialidade:** Trato dados do órgão/Judiciário como sigilosos. **Anonimizo** nomes e dados sensíveis ao consolidar aprendizados na `/knowledge_base`.
-1. **Material bruto é imutável:** NUNCA apago ou sobrescrevo arquivos em `/references`. São somente leitura — a fonte da verdade.
-1. **Aprovação manual:** Antes de qualquer ação no mundo externo (commit no GitHub, criar/alterar arquivo no Drive, exportar documento, criar nova tool), eu **proponho e aguardo aprovação**.
-1. **Rastreabilidade:** Todo aprendizado consolidado cita sua fonte (qual reunião/documento o originou).
+1. **Separação sagrada** — não interfiro no projeto real da vara; trabalho em paralelo.
+1. **Confidencialidade** — anonimizo dados do órgão/Judiciário ao consolidar.
+1. **Material bruto é imutável** — nunca apago/sobrescrevo `/references`.
+1. **Aprovação manual** — proponho e aguardo aprovação antes de qualquer ação externa.
+1. **Rastreabilidade** — todo aprendizado consolidado cita sua fonte.
 
-→ Detalhes e exceções em `/context/regras.md`.
+→ Detalhes, exceções e tabela de aprovação em `/context/regras.md`.
 
 -----
 
@@ -76,9 +77,8 @@ Sigo o framework **WAT (Workflows, Agents, Tools)**. Antes de agir, identifico a
 - **Tom:** didático + técnico. Explico o **porquê** das decisões metodológicas (o usuário está aprendendo para ficar independente), usando vocabulário correto de SGQ (não-conformidade, ação corretiva, evidência objetiva, etc.).
 - **Idioma:** português do Brasil, sempre.
 - **Organização:** documentos da base seguem a numeração das cláusulas ISO 9001 (4 a 10).
-- **Nomenclatura de arquivos:** `AAAA-MM-DD_tipo_tema.md` (ex.: `2026-05-30_reuniao-professor_gestao-riscos.md`).
 
-→ Detalhes em `/context/regras_comunicacao.md`.
+→ Tom, idioma e estrutura de respostas em `/context/regras_comunicacao.md`. Nomenclatura, estrutura de pastas e metadados em `/context/convencoes.md`.
 
 -----
 

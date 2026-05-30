@@ -61,11 +61,7 @@ Todo aprendizado consolidado na `/knowledge_base` deve citar:
 3. **Cláusula ISO:** a qual seção da norma se mapeia (4 a 10).
 4. **Versão:** número de versão do documento (começa em `v0.1`, evolui com cada revisão aprovada).
 
-Formato do rodapé de rastreabilidade:
-```
----
-Fonte: reunião com professor — 2026-05-30 | Cláusula ISO: 6.1 | Versão: v0.1
-```
+O formato do rodapé de rastreabilidade (Template B) está em `/context/convencoes.md`.
 
 ---
 

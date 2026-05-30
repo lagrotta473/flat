@@ -19,8 +19,10 @@ knowledge_base/
 
 Cada pasta de cláusula contém:
 - `_overview.md` — visão geral da cláusula, requisitos principais e intenção normativa.
-- Documentos de aprendizado específicos, nomeados: `AAAA-MM-DD_aprendizado_tema.md`.
+- Documentos de aprendizado específicos (nomenclatura em `/context/convencoes.md`).
 - `_modelos/` — templates de documentos práticos (Política da Qualidade, formulários, etc.).
+
+> Nomenclatura, estrutura completa de pastas e templates de metadados: ver `/context/convencoes.md`.
 
 ## Status da Knowledge Base
 
