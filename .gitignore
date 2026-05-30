@@ -1,0 +1,21 @@
+# Credenciais e ambiente
+.env
+*.env
+.env.local
+secrets.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+
+# Sistema
+.DS_Store
+.idea/
+.vscode/
+
+# Logs temporários
+*.log
