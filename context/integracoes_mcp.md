@@ -1,57 +1,94 @@
 # Integrações MCP (Model Context Protocol)
 
-> Status de cada integração: **Planejada**, **Configurada** ou **Ativa**.
-
-## 1. GitHub — Versionamento da Metodologia
-
-- **Status:** Ativa (este repositório).
-- **Uso:** Versionar toda a `/knowledge_base`, `/workflows`, `/skills` e `/context`. Cada evolução metodológica gera um commit rastreável.
-- **Regra:** O agente **propõe** o commit; o usuário **aprova** antes de executar.
-
-## 2. Google Workspace (Docs / Drive / Sheets)
-
-- **Status:** Planejada.
-- **Uso previsto:**
-  - Exportar documentos da knowledge_base para Google Docs (formato editável para clientes).
-  - Organizar transcrições de reuniões no Drive.
-  - Acompanhar indicadores de SGQ em Google Sheets.
-- **Configuração necessária:** Credenciais OAuth + MCP server `google-workspace`.
-
-## 3. Transcrição de Áudio → Texto
-
-- **Status:** Planejada.
-- **Uso previsto:** Processar gravações de reuniões com o professor, convertendo áudio em texto e salvando em `/references/reunioes/`.
-- **Opções de implementação:** Whisper (local/API OpenAI), Google Speech-to-Text.
-- **Configuração necessária:** Definir provider e chave de API.
-
-## 4. Web Search
-
-- **Status:** Disponível via ambiente Claude Code.
-- **Uso:** Consultar textos normativos ISO 9001, benchmarks de SGQ, jurisprudência de qualidade em organismos públicos.
-- **Regra:** Resultados de busca são sempre referenciados como fonte ao consolidar conhecimento.
-
-## 5. Leitura de PDF
-
-- **Status:** Disponível via ambiente Claude Code.
-- **Uso:** Ler a norma ABNT NBR ISO 9001:2015, POPs, modelos de documentação.
-- **Regra:** PDFs lidos são registrados em `/references/` com metadados de origem.
-
-## 6. Base Vetorial / RAG
-
-- **Status:** Planejada.
-- **Uso previsto:** Busca semântica dentro de toda a `/knowledge_base` e `/references`. Responde perguntas como "o que já documentamos sobre gestão de riscos?".
-- **Opções:** ChromaDB local, Pinecone, Weaviate.
-- **Dependência:** Implementar após a knowledge_base ter volume suficiente (≥ 20 documentos).
+> Status: **Ativa** | **Configurada** (aguarda chaves) | **Futura** (aguarda gatilho) | **Disponível** (sem configuração)
 
 ---
 
-## Checklist de Configuração
+## 1. GitHub — Versionamento
 
-| Integração | Prioridade | Ação Necessária |
-|------------|------------|-----------------|
-| GitHub | Alta | ✅ Ativa |
-| Web Search | Alta | ✅ Disponível |
-| Leitura de PDF | Alta | ✅ Disponível |
-| Google Workspace | Média | Configurar credenciais OAuth |
-| Transcrição de Áudio | Média | Escolher provider e configurar API |
-| Base Vetorial / RAG | Baixa | Aguardar volume de knowledge_base |
+- **Status:** Ativa.
+- **Uso:** Versionar `/knowledge_base`, `/workflows`, `/skills`, `/context`, `/web`. Cada evolução gera commit rastreável.
+- **Regra:** Agente propõe; usuário aprova antes de executar.
+
+---
+
+## 2. Google Drive — Exportar documentos para professor/cliente
+
+- **Status:** Configurada (aguarda `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` no `.env`).
+- **MCP server:** `@modelcontextprotocol/server-gdrive` (configurado em `.claude/settings.json`)
+- **Uso:**
+  - Upload de PDFs/DOCX da metodologia para compartilhar com professor e vara
+  - Organizar pasta por projeto (Cacimbinhas, futura Clínica)
+- **Credenciais:** `console.cloud.google.com` → Projeto → Drive API → OAuth 2.0 → Desktop app
+- **Ativar:** colocar `GOOGLE_CLIENT_ID` e `GOOGLE_CLIENT_SECRET` no `.env` e reiniciar Claude Code
+
+---
+
+## 3. Transcrição de Áudio — Google Cloud Speech-to-Text
+
+- **Status:** Configurada (aguarda `GOOGLE_APPLICATION_CREDENTIALS` no `.env`).
+- **Tool:** `tools/transcrever_audio.py`
+- **Uso:** Processar gravações de reuniões (WAV, FLAC, OGG) → salvar transcrição em `references/reunioes/`
+- **Idioma:** `pt-BR`, modelo `latest_long`
+- **Credencial:** mesmo service account JSON do Drive → `config/google-service-account.json`
+- **Custo:** gratuito até 60 min/mês; ~R$ 0,09/hora adicional
+
+### Atalho: Reuniões via Microsoft Teams
+
+O professor usa Teams. Se ele (ou você) ativar a **transcrição automática durante a chamada**:
+1. Ao final, exporte o arquivo `.vtt` pelo chat da reunião
+2. Execute: `python tools/converter_teams_transcript.py reuniao.vtt --tema "juiz-cacimbinhas"`
+3. O arquivo já vai direto para `references/reunioes/` — **sem gastar minutos de API**
+
+Tool: `tools/converter_teams_transcript.py` — zero custo, zero API key.
+
+---
+
+## 4. Web Search
+
+- **Status:** Disponível via Claude Code (ferramenta `WebSearch` embutida).
+- **Uso:** Consultar normas ISO 9001, resoluções CNJ, benchmarks SGQ em órgãos públicos.
+- **Upgrade opcional:** Brave Search MCP para pesquisa programática por tools Python
+  - Configurado em `.claude/settings.json` (aguarda `BRAVE_API_KEY` no `.env`)
+  - Chave: `brave.com/search/api` → gratuito 2000 queries/mês
+
+---
+
+## 5. Leitura de PDF
+
+- **Status:** Disponível via Claude Code (ferramenta `Read` nativa).
+- **Uso:** Ler ABNT NBR ISO 9001:2015, POPs, documentos da vara.
+- **Regra:** PDFs lidos são registrados em `references/normas/` ou `references/material_professor/`.
+
+---
+
+## 6. RAG / Busca Semântica — Gemini Embeddings + ChromaDB
+
+- **Status:** Futura (ativar quando KB ≥ 20 documentos).
+- **Tool:** `tools/buscar_na_base.py`
+- **Tecnologia:** `text-embedding-004` (Gemini) para vetores + ChromaDB local para armazenamento
+- **Referência:** `https://ai.google.dev/gemini-api/docs/embeddings`
+- **Credencial:** `GEMINI_API_KEY` em `.env` → `aistudio.google.com` → gratuito (1500 req/dia)
+- **Como ativar:**
+  1. Colocar `GEMINI_API_KEY` no `.env`
+  2. `pip install google-generativeai chromadb`
+  3. `python tools/buscar_na_base.py --reindexar`
+  4. `python tools/buscar_na_base.py "controle de saídas não conformes"`
+
+---
+
+## Checklist de Ativação
+
+| Integração | Status | Ação para ativar |
+|------------|--------|-----------------|
+| GitHub | ✅ Ativa | — |
+| Web Search (Claude Code) | ✅ Disponível | — |
+| Leitura de PDF | ✅ Disponível | — |
+| Teams Transcript | ✅ Pronta | `pip install python-docx` + exportar `.vtt` do Teams |
+| Exportar DOCX | ✅ Pronta | `pip install python-docx` |
+| Google Drive MCP | ⏳ Aguarda chaves | `GOOGLE_CLIENT_ID` + `GOOGLE_CLIENT_SECRET` no `.env` |
+| Speech-to-Text | ⏳ Aguarda chaves | `GOOGLE_APPLICATION_CREDENTIALS` no `.env` (service account JSON) |
+| Brave Search MCP | ⏳ Aguarda chaves | `BRAVE_API_KEY` no `.env` |
+| RAG (Gemini + ChromaDB) | 🔜 KB < 20 docs | `GEMINI_API_KEY` no `.env` + reindexar |
+
+→ Template de todas as chaves com instruções: `.env.template`

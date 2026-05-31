@@ -3,6 +3,7 @@
 *.env
 .env.local
 secrets.*
+config/
 
 # Python
 __pycache__/
@@ -19,6 +20,9 @@ venv/
 
 # Logs temporários
 *.log
+
+# ChromaDB (índice vetorial local)
+data/chroma/
 
 # Web (Astro)
 web/dist/
