@@ -1,0 +1,232 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  return [
+    { params: { slug: 'clausula_4_contexto_organizacional'  }, props: { num: 4,  title: 'Contexto Organizacional'  } },
+    { params: { slug: 'clausula_5_lideranca'                }, props: { num: 5,  title: 'Liderança'                 } },
+    { params: { slug: 'clausula_6_planejamento'             }, props: { num: 6,  title: 'Planejamento'              } },
+    { params: { slug: 'clausula_7_suporte'                  }, props: { num: 7,  title: 'Apoio'                     } },
+    { params: { slug: 'clausula_8_operacao'                 }, props: { num: 8,  title: 'Operação'                  } },
+    { params: { slug: 'clausula_9_avaliacao_desempenho'     }, props: { num: 9,  title: 'Avaliação de Desempenho'   } },
+    { params: { slug: 'clausula_10_melhoria'                }, props: { num: 10, title: 'Melhoria'                  } },
+  ];
+}
+
+const { slug } = Astro.params;
+const { num, title } = Astro.props;
+
+const allEntries  = await getCollection('knowledgeBase');
+const allInClause = allEntries.filter(e => e.id.startsWith(slug + '/'));
+const overviewEntry = allInClause.find(e => e.id.endsWith('/_overview'));
+const aprendizados  = allInClause.filter(e => !e.id.endsWith('/_overview') && !e.id.includes('_modelos'));
+
+const overviewRendered = overviewEntry ? await render(overviewEntry) : null;
+const aprendizadosRendered = await Promise.all(
+  aprendizados.map(async e => {
+    const { Content } = await render(e);
+    const dateMatch = e.id.match(/(\d{4}-\d{2}-\d{2})/);
+    const date = dateMatch ? dateMatch[1] : '';
+    const nameSlug = e.id.split('/').pop() ?? e.id;
+    const label = nameSlug
+      .replace(/^\d{4}-\d{2}-\d{2}_/, '')
+      .replace(/^aprendizado_/, '')
+      .replace(/-/g, ' ');
+    return { entry: e, Content, date, label };
+  })
+);
+
+const badgeColors: Record<number, string> = {
+  4: 'bg-violet-100 text-violet-800', 5: 'bg-blue-100 text-blue-800',
+  6: 'bg-cyan-100 text-cyan-800',     7: 'bg-teal-100 text-teal-800',
+  8: 'bg-emerald-100 text-emerald-800', 9: 'bg-orange-100 text-orange-800',
+  10: 'bg-rose-100 text-rose-800',
+};
+const badge = badgeColors[num] ?? 'bg-slate-100 text-slate-700';
+---
+
+<Layout title={`Cláusula ${num} — ${title}`} section="base">
+
+  <!-- Breadcrumb -->
+  <nav class="flex items-center gap-2 text-sm text-slate-400 mb-6">
+    <a href="/" class="hover:text-slate-600">Início</a>
+    <span>/</span>
+    <a href="/base" class="hover:text-slate-600">Central de Conhecimento</a>
+    <span>/</span>
+    <span class="text-slate-700 font-medium">Cláusula {num}</span>
+  </nav>
+
+  <!-- Header da cláusula -->
+  <div class="flex items-center gap-4 mb-8">
+    <span class={`inline-flex items-center justify-center w-14 h-14 rounded-2xl text-xl font-bold ${badge}`}>
+      {num}
+    </span>
+    <div>
+      <p class="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-0.5">ISO 9001:2015 · Cláusula {num}</p>
+      <h1 class="text-2xl font-bold text-slate-900">{title}</h1>
+    </div>
+  </div>
+
+  <!-- Overview -->
+  {overviewRendered ? (
+    <section class="mb-10">
+      <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+        <span class="w-5 h-px bg-slate-300 inline-block"></span>
+        Visão Geral da Cláusula
+        <span class="w-5 h-px bg-slate-300 inline-block"></span>
+      </h2>
+      <div class="bg-white rounded-xl border border-slate-200 p-6 md:p-8 prose-area">
+        <overviewRendered.Content />
+      </div>
+    </section>
+  ) : (
+    <div class="bg-slate-50 border border-dashed border-slate-200 rounded-xl p-6 mb-10 text-center text-slate-400 text-sm">
+      Visão geral desta cláusula ainda não documentada.
+    </div>
+  )}
+
+  <!-- Aprendizados -->
+  <section>
+    <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+      <span class="w-5 h-px bg-slate-300 inline-block"></span>
+      Aprendizados consolidados
+      <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-full text-xs">{aprendizados.length}</span>
+    </h2>
+
+    {aprendizadosRendered.length > 0 ? (
+      <div class="space-y-6">
+        {aprendizadosRendered.map(({ Content, date, label }) => (
+          <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <div class="flex items-center gap-3 px-6 py-3 bg-slate-50 border-b border-slate-100">
+              <span class="text-slate-400 text-xs font-mono">{date}</span>
+              <span class="text-slate-700 text-sm font-medium capitalize">{label}</span>
+            </div>
+            <div class="p-6 md:p-8 prose-area">
+              <Content />
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="bg-slate-50 border border-dashed border-slate-200 rounded-xl p-6 text-center text-slate-400 text-sm">
+        Nenhum aprendizado consolidado ainda para esta cláusula.
+      </div>
+    )}
+  </section>
+
+</Layout>
+
+<style>
+  /* Estilos para o conteúdo Markdown renderizado */
+  .prose-area :global(h1) {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .prose-area :global(h1:first-child) { margin-top: 0; }
+
+  .prose-area :global(h2) {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-top: 1.75rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .prose-area :global(h3) {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 1.25rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .prose-area :global(p) {
+    color: #475569;
+    line-height: 1.7;
+    margin-bottom: 0.9rem;
+  }
+
+  .prose-area :global(ul),
+  .prose-area :global(ol) {
+    color: #475569;
+    padding-left: 1.5rem;
+    margin-bottom: 0.9rem;
+  }
+  .prose-area :global(li) { margin-bottom: 0.3rem; line-height: 1.6; }
+
+  .prose-area :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    overflow-x: auto;
+    display: block;
+  }
+  .prose-area :global(th) {
+    background: #f8fafc;
+    color: #475569;
+    font-weight: 600;
+    padding: 0.6rem 0.9rem;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+  }
+  .prose-area :global(td) {
+    padding: 0.55rem 0.9rem;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    vertical-align: top;
+  }
+  .prose-area :global(tr:nth-child(even) td) { background: #fafafa; }
+
+  .prose-area :global(strong) { font-weight: 600; color: #1e293b; }
+  .prose-area :global(em) { color: #64748b; }
+
+  .prose-area :global(blockquote) {
+    border-left: 3px solid #818cf8;
+    padding: 0.5rem 1rem;
+    margin: 1rem 0;
+    background: #eef2ff;
+    border-radius: 0 0.5rem 0.5rem 0;
+    color: #4338ca;
+    font-style: italic;
+  }
+
+  .prose-area :global(code) {
+    background: #f1f5f9;
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.3rem;
+    font-size: 0.8rem;
+    font-family: 'Menlo', 'Monaco', monospace;
+    color: #1e293b;
+  }
+
+  .prose-area :global(pre) {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 1rem 1.25rem;
+    border-radius: 0.75rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+  .prose-area :global(pre code) {
+    background: none;
+    padding: 0;
+    color: inherit;
+  }
+
+  .prose-area :global(hr) {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 1.5rem 0;
+  }
+
+  .prose-area :global(a) { color: #4f46e5; text-decoration: underline; }
+  .prose-area :global(a:hover) { color: #3730a3; }
+</style>

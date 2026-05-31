@@ -1,0 +1,73 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  section?: 'home' | 'base' | 'sistema';
+}
+
+const { title, section = 'home' } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} — SGQ Destilador</title>
+  </head>
+  <body class="min-h-screen bg-slate-50 text-slate-800" style="font-family: system-ui, -apple-system, sans-serif;">
+
+    <nav class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex h-14 items-center justify-between">
+
+          <a href="/" class="flex items-center gap-2 group">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-indigo-600 text-white font-bold text-sm">S</span>
+            <span class="font-semibold text-slate-800 hidden sm:inline">SGQ Destilador</span>
+          </a>
+
+          <div class="flex items-center gap-1">
+            <a
+              href="/base"
+              class={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                section === 'base'
+                  ? 'bg-indigo-100 text-indigo-800'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-800'
+              }`}
+            >
+              <span>📚</span>
+              <span class="hidden sm:inline">Central de Conhecimento</span>
+              <span class="sm:hidden">Base</span>
+            </a>
+            <a
+              href="/sistema"
+              class={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                section === 'sistema'
+                  ? 'bg-amber-100 text-amber-800'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-800'
+              }`}
+            >
+              <span>⚙️</span>
+              <span class="hidden sm:inline">Sistema SGQ</span>
+              <span class="sm:hidden">Sistema</span>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <slot />
+    </main>
+
+    <footer class="mt-16 border-t border-slate-200 py-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
+        <span>SGQ Destilador · ISO 9001:2015</span>
+        <span>Material confidencial · Uso pessoal</span>
+      </div>
+    </footer>
+
+  </body>
+</html>

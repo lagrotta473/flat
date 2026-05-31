@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const kbEntries = await getCollection('knowledgeBase');
+const reunioes  = await getCollection('reunioes');
+
+const clausulasInfo = [
+  { num: 4,  title: 'Contexto Organizacional',  slug: 'clausula_4_contexto_organizacional'  },
+  { num: 5,  title: 'Liderança',                 slug: 'clausula_5_lideranca'                },
+  { num: 6,  title: 'Planejamento',              slug: 'clausula_6_planejamento'             },
+  { num: 7,  title: 'Apoio',                     slug: 'clausula_7_suporte'                  },
+  { num: 8,  title: 'Operação',                  slug: 'clausula_8_operacao'                 },
+  { num: 9,  title: 'Avaliação de Desempenho',   slug: 'clausula_9_avaliacao_desempenho'     },
+  { num: 10, title: 'Melhoria',                  slug: 'clausula_10_melhoria'                },
+];
+
+const clausulasStats = clausulasInfo.map(c => {
+  const entries = kbEntries.filter(e =>
+    e.id.startsWith(c.slug + '/') && !e.id.endsWith('_overview')
+  );
+  const hasOverview = kbEntries.some(e => e.id === c.slug + '/_overview');
+  return { ...c, aprendizados: entries.length, hasOverview };
+});
+
+const totalAprendizados = clausulasStats.reduce((s, c) => s + c.aprendizados, 0);
+
+const badgeColors: Record<number, string> = {
+  4: 'bg-violet-100 text-violet-800', 5: 'bg-blue-100 text-blue-800',
+  6: 'bg-cyan-100 text-cyan-800',     7: 'bg-teal-100 text-teal-800',
+  8: 'bg-emerald-100 text-emerald-800', 9: 'bg-orange-100 text-orange-800',
+  10: 'bg-rose-100 text-rose-800',
+};
+---
+
+<Layout title="Início" section="home">
+
+  <!-- Hero -->
+  <div class="mb-10">
+    <h1 class="text-3xl font-bold text-slate-900 mb-2">SGQ Destilador de Conhecimento</h1>
+    <p class="text-slate-500 text-lg">Metodologia ISO 9001:2015 — organizada, rastreável, replicável.</p>
+  </div>
+
+  <!-- Dois andares -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+
+    <!-- ANDAR 1: Central de Conhecimento -->
+    <a
+      href="/base"
+      class="group relative block bg-white rounded-2xl border-2 border-indigo-200 hover:border-indigo-400 p-7 transition-all hover:shadow-lg"
+    >
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-3xl">📚</span>
+        <div>
+          <div class="text-xs font-semibold uppercase tracking-widest text-indigo-500 mb-0.5">Andar 1</div>
+          <h2 class="text-xl font-bold text-slate-900">Central de Conhecimento</h2>
+        </div>
+      </div>
+      <p class="text-slate-500 text-sm mb-5">
+        Tudo que você aprende com o professor, organizado por cláusula ISO 9001 — da reunião ao aprendizado consolidado.
+      </p>
+      <div class="flex gap-5 mb-5">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-indigo-700">7</div>
+          <div class="text-xs text-slate-500">cláusulas</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-indigo-700">{totalAprendizados}</div>
+          <div class="text-xs text-slate-500">aprendizados</div>
+        </div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-indigo-700">{reunioes.length}</div>
+          <div class="text-xs text-slate-500">reunião{reunioes.length !== 1 ? 'ões' : ''}</div>
+        </div>
+      </div>
+      <span class="text-sm font-semibold text-indigo-600 group-hover:text-indigo-700 flex items-center gap-1">
+        Acessar base <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
+      </span>
+    </a>
+
+    <!-- ANDAR 2: Sistema SGQ -->
+    <a
+      href="/sistema"
+      class="group relative block bg-white rounded-2xl border-2 border-amber-200 hover:border-amber-400 p-7 transition-all hover:shadow-lg"
+    >
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-3xl">⚙️</span>
+        <div>
+          <div class="text-xs font-semibold uppercase tracking-widest text-amber-500 mb-0.5">Andar 2</div>
+          <h2 class="text-xl font-bold text-slate-900">Sistema SGQ</h2>
+        </div>
+      </div>
+      <p class="text-slate-500 text-sm mb-5">
+        O software que nasce da metodologia acima: registro de NCs, checklists de execução, indicadores e revisão pela direção.
+      </p>
+      <div class="flex flex-wrap gap-2 mb-5">
+        {['Registro de NC', 'Checklists', 'Indicadores', 'RAE'].map(f => (
+          <span class="px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full text-xs font-medium border border-amber-200">{f}</span>
+        ))}
+      </div>
+      <span class="text-sm font-semibold text-amber-600 group-hover:text-amber-700 flex items-center gap-1">
+        Ver roteiro <span class="group-hover:translate-x-1 transition-transform inline-block">→</span>
+      </span>
+      <span class="absolute top-4 right-4 px-2 py-0.5 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full">Em construção</span>
+    </a>
+
+  </div>
+
+  <!-- Projeto em andamento -->
+  <div class="bg-white rounded-xl border border-slate-200 p-5 mb-8">
+    <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-4">Projeto em andamento</h3>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+      <div>
+        <div class="text-slate-400 text-xs mb-0.5">Organização</div>
+        <div class="font-medium text-slate-800">Vara de Cacimbinhas/AL</div>
+      </div>
+      <div>
+        <div class="text-slate-400 text-xs mb-0.5">Início</div>
+        <div class="font-medium text-slate-800">2026-05-30</div>
+      </div>
+      <div>
+        <div class="text-slate-400 text-xs mb-0.5">Problema central</div>
+        <div class="font-medium text-slate-800">Volume × Qualidade</div>
+      </div>
+      <div>
+        <div class="text-slate-400 text-xs mb-0.5">Frequência</div>
+        <div class="font-medium text-slate-800">1× por semana</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grade rápida de cláusulas -->
+  <div>
+    <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wide mb-4">Progresso por cláusula ISO</h3>
+    <div class="grid grid-cols-4 sm:grid-cols-7 gap-2">
+      {clausulasStats.map(c => (
+        <a
+          href={`/base/clausulas/${c.slug}`}
+          class="group flex flex-col items-center bg-white rounded-xl border border-slate-200 hover:border-slate-300 p-3 transition-all hover:shadow-sm"
+        >
+          <span class={`w-9 h-9 rounded-lg flex items-center justify-center text-sm font-bold mb-2 ${badgeColors[c.num]}`}>
+            {c.num}
+          </span>
+          <span class="text-xs text-slate-500 text-center leading-tight hidden sm:block">{c.title.split(' ')[0]}</span>
+          <span class="mt-1.5 text-xs font-medium text-slate-600">{c.aprendizados} apr.</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+</Layout>

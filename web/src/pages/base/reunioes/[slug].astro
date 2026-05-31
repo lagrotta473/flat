@@ -1,0 +1,70 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const reunioes = await getCollection('reunioes');
+  return reunioes.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const dateMatch = entry.id.match(/^(\d{4}-\d{2}-\d{2})/);
+const date = dateMatch ? dateMatch[1] : '';
+const label = entry.id
+  .replace(/^\d{4}-\d{2}-\d{2}_/, '')
+  .replace(/^reuniao_/, '')
+  .replace(/-/g, ' ');
+---
+
+<Layout title={label} section="base">
+
+  <!-- Breadcrumb -->
+  <nav class="flex items-center gap-2 text-sm text-slate-400 mb-6">
+    <a href="/" class="hover:text-slate-600">Início</a>
+    <span>/</span>
+    <a href="/base" class="hover:text-slate-600">Central de Conhecimento</a>
+    <span>/</span>
+    <a href="/base/reunioes" class="hover:text-slate-600">Reuniões</a>
+    <span>/</span>
+    <span class="text-slate-700 font-medium capitalize">{label}</span>
+  </nav>
+
+  <!-- Header -->
+  <div class="flex items-center gap-4 mb-8">
+    <span class="text-3xl">🎙️</span>
+    <div>
+      <p class="text-xs font-mono text-slate-400 mb-0.5">{date}</p>
+      <h1 class="text-2xl font-bold text-slate-900 capitalize">{label}</h1>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-xl border border-slate-200 p-6 md:p-8 prose-area">
+    <Content />
+  </div>
+
+</Layout>
+
+<style>
+  .prose-area :global(h1) { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-top: 2rem; margin-bottom: 0.75rem; }
+  .prose-area :global(h1:first-child) { margin-top: 0; }
+  .prose-area :global(h2) { font-size: 1.2rem; font-weight: 600; color: #1e293b; margin-top: 1.75rem; margin-bottom: 0.6rem; padding-bottom: 0.4rem; border-bottom: 1px solid #e2e8f0; }
+  .prose-area :global(h3) { font-size: 1rem; font-weight: 600; color: #334155; margin-top: 1.25rem; margin-bottom: 0.4rem; }
+  .prose-area :global(p) { color: #475569; line-height: 1.7; margin-bottom: 0.9rem; }
+  .prose-area :global(ul), .prose-area :global(ol) { color: #475569; padding-left: 1.5rem; margin-bottom: 0.9rem; }
+  .prose-area :global(li) { margin-bottom: 0.3rem; line-height: 1.6; }
+  .prose-area :global(table) { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.875rem; overflow-x: auto; display: block; }
+  .prose-area :global(th) { background: #f8fafc; color: #475569; font-weight: 600; padding: 0.6rem 0.9rem; text-align: left; border: 1px solid #e2e8f0; }
+  .prose-area :global(td) { padding: 0.55rem 0.9rem; border: 1px solid #e2e8f0; color: #475569; vertical-align: top; }
+  .prose-area :global(tr:nth-child(even) td) { background: #fafafa; }
+  .prose-area :global(strong) { font-weight: 600; color: #1e293b; }
+  .prose-area :global(blockquote) { border-left: 3px solid #818cf8; padding: 0.5rem 1rem; margin: 1rem 0; background: #eef2ff; border-radius: 0 0.5rem 0.5rem 0; color: #4338ca; font-style: italic; }
+  .prose-area :global(code) { background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 0.3rem; font-size: 0.8rem; font-family: monospace; color: #1e293b; }
+  .prose-area :global(hr) { border: none; border-top: 1px solid #e2e8f0; margin: 1.5rem 0; }
+  .prose-area :global(a) { color: #4f46e5; text-decoration: underline; }
+  .prose-area :global(input[type="checkbox"]) { margin-right: 0.4rem; }
+</style>

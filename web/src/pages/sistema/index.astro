@@ -1,0 +1,132 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout title="Sistema SGQ" section="sistema">
+
+  <!-- Header -->
+  <div class="mb-10">
+    <div class="inline-flex items-center gap-2 px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-semibold mb-4">
+      Em construção
+    </div>
+    <h1 class="text-3xl font-bold text-slate-900 mb-2">Sistema SGQ</h1>
+    <p class="text-slate-500 text-lg max-w-2xl">
+      O software de gestão da qualidade que nasce da metodologia documentada na Central de Conhecimento.
+    </p>
+  </div>
+
+  <!-- O problema que o sistema resolve -->
+  <div class="bg-amber-50 border border-amber-200 rounded-xl p-6 mb-10">
+    <h2 class="text-sm font-semibold text-amber-800 uppercase tracking-wide mb-3">O problema que este sistema resolve</h2>
+    <p class="text-amber-900 text-sm leading-relaxed">
+      A Vara de Cacimbinhas possui modelos de decisão bem estruturados, mas o alto volume de processos
+      gera erros frequentes na <strong>execução e adaptação</strong> desses modelos. O sistema oferece
+      as ferramentas para controlar a qualidade na execução — sem desacelerar o fluxo.
+    </p>
+    <p class="text-amber-700 text-xs mt-2 font-mono">
+      ISO 9001 · Cláusulas 8.5 (Operação) · 8.7 (Saídas não conformes) · 10.2 (Ação corretiva)
+    </p>
+  </div>
+
+  <!-- Módulos planejados -->
+  <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-5">Módulos do Sistema</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
+
+    <div class="bg-white rounded-xl border-2 border-dashed border-slate-200 p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-2xl">📋</span>
+        <div>
+          <div class="font-semibold text-slate-800">Registro de Não Conformidades</div>
+          <div class="text-xs text-slate-400 font-mono">ISO 9001 · 10.2</div>
+        </div>
+      </div>
+      <p class="text-slate-500 text-sm leading-relaxed">
+        Registre erros de execução (audiências, atos processuais, adaptações de modelos), identifique padrões
+        e rastreie ações corretivas por tipo de causa.
+      </p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {['Abertura de NC', 'Análise de causa-raiz', 'Ação corretiva', 'Verificação de eficácia'].map(f => (
+          <span class="px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-xs">{f}</span>
+        ))}
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border-2 border-dashed border-slate-200 p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-2xl">✅</span>
+        <div>
+          <div class="font-semibold text-slate-800">Checklists de Execução</div>
+          <div class="text-xs text-slate-400 font-mono">ISO 9001 · 8.5</div>
+        </div>
+      </div>
+      <p class="text-slate-500 text-sm leading-relaxed">
+        Checklists por tipo de ato processual (audiência, despacho, sentença) — um "portão de saída" rápido
+        antes de finalizar. Adaptados para cada tipo de causa bancária.
+      </p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {['Checklist por tipo de ato', 'Adaptação de modelo', 'Portão de verificação', 'Registro de evidência'].map(f => (
+          <span class="px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-xs">{f}</span>
+        ))}
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border-2 border-dashed border-slate-200 p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-2xl">📊</span>
+        <div>
+          <div class="font-semibold text-slate-800">Painel de Indicadores</div>
+          <div class="text-xs text-slate-400 font-mono">ISO 9001 · 9.1</div>
+        </div>
+      </div>
+      <p class="text-slate-500 text-sm leading-relaxed">
+        IAD, Taxa de Congestionamento, tempo médio de tramitação, NCs abertas vs. encerradas — os indicadores
+        do CNJ integrados ao SGQ sem criar sistemas paralelos.
+      </p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {['IAD · Meta 1 CNJ', 'Taxa de congestionamento', 'NCs por período', 'Tendência mensal'].map(f => (
+          <span class="px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-xs">{f}</span>
+        ))}
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl border-2 border-dashed border-slate-200 p-6">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="text-2xl">🗂️</span>
+        <div>
+          <div class="font-semibold text-slate-800">Revisão pela Direção (RAE)</div>
+          <div class="text-xs text-slate-400 font-mono">ISO 9001 · 9.3</div>
+        </div>
+      </div>
+      <p class="text-slate-500 text-sm leading-relaxed">
+        Pauta estruturada para a RAE com todas as entradas obrigatórias da norma — integrada à RAE já exigida
+        pela Resolução CNJ 70/2009.
+      </p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        {['Pauta automática', 'Entradas da norma', 'Ata com saídas', 'Histórico de RAEs'].map(f => (
+          <span class="px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-xs">{f}</span>
+        ))}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA: Consultar a base -->
+  <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+    <span class="text-3xl">📚</span>
+    <div class="flex-1">
+      <div class="font-semibold text-indigo-900 mb-1">A especificação já existe</div>
+      <p class="text-indigo-700 text-sm leading-relaxed">
+        Cada módulo acima é especificado em detalhe na Central de Conhecimento — nas cláusulas ISO correspondentes.
+        O software nasce dali, não o inverso.
+      </p>
+    </div>
+    <a
+      href="/base"
+      class="flex-shrink-0 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+    >
+      Ver metodologia →
+    </a>
+  </div>
+
+</Layout>

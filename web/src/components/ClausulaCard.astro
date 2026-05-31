@@ -1,0 +1,54 @@
+---
+interface Props {
+  num: number;
+  title: string;
+  slug: string;
+  aprendizados: number;
+  hasOverview: boolean;
+}
+
+const { num, title, slug, aprendizados, hasOverview } = Astro.props;
+
+const colors: Record<number, { badge: string; border: string; hover: string }> = {
+  4:  { badge: 'bg-violet-100 text-violet-800',  border: 'border-violet-200', hover: 'hover:border-violet-400' },
+  5:  { badge: 'bg-blue-100 text-blue-800',       border: 'border-blue-200',  hover: 'hover:border-blue-400'   },
+  6:  { badge: 'bg-cyan-100 text-cyan-800',       border: 'border-cyan-200',  hover: 'hover:border-cyan-400'   },
+  7:  { badge: 'bg-teal-100 text-teal-800',       border: 'border-teal-200',  hover: 'hover:border-teal-400'   },
+  8:  { badge: 'bg-emerald-100 text-emerald-800', border: 'border-emerald-200', hover: 'hover:border-emerald-400' },
+  9:  { badge: 'bg-orange-100 text-orange-800',   border: 'border-orange-200', hover: 'hover:border-orange-400' },
+  10: { badge: 'bg-rose-100 text-rose-800',       border: 'border-rose-200',  hover: 'hover:border-rose-400'   },
+};
+
+const c = colors[num] ?? colors[4];
+---
+
+<a
+  href={`/base/clausulas/${slug}`}
+  class={`block bg-white rounded-xl border-2 ${c.border} ${c.hover} p-5 transition-all group hover:shadow-md`}
+>
+  <div class="flex items-start justify-between mb-3">
+    <span class={`inline-flex items-center justify-center w-10 h-10 rounded-lg text-sm font-bold ${c.badge}`}>
+      {num}
+    </span>
+    {hasOverview && (
+      <span class="text-xs text-slate-400 flex items-center gap-1">
+        <span class="text-green-500">✓</span> overview
+      </span>
+    )}
+  </div>
+
+  <h3 class="font-semibold text-slate-800 text-sm mb-3 group-hover:text-slate-900 leading-snug">
+    {title}
+  </h3>
+
+  <div class="flex items-center gap-3 text-xs text-slate-500">
+    <span class="flex items-center gap-1">
+      <span>📄</span>
+      <span>{aprendizados} aprendizado{aprendizados !== 1 ? 's' : ''}</span>
+    </span>
+  </div>
+
+  <div class="mt-4 text-xs font-medium text-indigo-600 group-hover:text-indigo-700 flex items-center gap-1">
+    Ver cláusula <span class="group-hover:translate-x-0.5 transition-transform inline-block">→</span>
+  </div>
+</a>

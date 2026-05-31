@@ -19,3 +19,8 @@ venv/
 
 # Logs temporários
 *.log
+
+# Web (Astro)
+web/dist/
+web/node_modules/
+web/.astro/
